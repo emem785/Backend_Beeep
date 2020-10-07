@@ -1,0 +1,5 @@
+verification_codes.json
+beeep/__pycache__/urls.cpython-37.pyc
+*.pyc
+db.sqlite3
+*.sqlite3

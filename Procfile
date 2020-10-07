@@ -1,0 +1,1 @@
+web: gunicorn beeep.wsgi --log-file -

@@ -1,0 +1,249 @@
+BEGIN;
+--
+-- Change Meta options on buddy
+--
+--
+-- Remove field buddy from civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id" FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field user to buddy
+--
+CREATE TABLE "new__main_buddy" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "user_id" integer NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "phonenumber" integer NOT NULL, "relationship" varchar(30) NOT NULL);
+INSERT INTO "new__main_buddy" ("id", "firstname", "lastname", "phonenumber", "relationship", "user_id") SELECT "id", "firstname", "lastname", "phonenumber", "relationship", NULL FROM "main_buddy";
+DROP TABLE "main_buddy";
+ALTER TABLE "new__main_buddy" RENAME TO "main_buddy";
+CREATE INDEX "main_buddy_user_id_5fc2b7e3" ON "main_buddy" ("user_id");
+--
+-- Add field address to civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", NULL FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field email to civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", NULL FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field image to civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", NULL FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field is_beeeping to civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_beeeping" bool NOT NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", "is_beeeping") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", 0 FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field is_verified to civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_beeeping" bool NOT NULL, "is_verified" bool NOT NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", "is_beeeping", 0 FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field phone to civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_beeeping" bool NOT NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", NULL FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field address to lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", NULL FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Add field email to lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", NULL FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Add field image to lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", NULL FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Add field is_verified to lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_verified" bool NOT NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", "is_verified") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", 0 FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Add field phone to lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", "is_verified", "phone") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", "is_verified", NULL FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Add field token to lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL, "token" varchar(200) NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", "is_verified", "phone", "token") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", "is_verified", "phone", NULL FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Add field type_of_user to plan
+--
+CREATE TABLE "new__main_plan" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(30) NOT NULL, "num_of_buddies" integer NOT NULL, "num_of_lawyers" integer NOT NULL, "num_of_devices" integer NOT NULL, "price" integer NOT NULL, "type_of_user" varchar(30) NOT NULL);
+INSERT INTO "new__main_plan" ("id", "name", "num_of_buddies", "num_of_lawyers", "num_of_devices", "price", "type_of_user") SELECT "id", "name", "num_of_buddies", "num_of_lawyers", "num_of_devices", "price", 'civilian' FROM "main_plan";
+DROP TABLE "main_plan";
+ALTER TABLE "new__main_plan" RENAME TO "main_plan";
+--
+-- Add field plan_price to subscription
+--
+CREATE TABLE "new__main_subscription" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "sub_date" date NOT NULL, "duration" date NOT NULL, "expiration" date NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_price" integer NOT NULL);
+INSERT INTO "new__main_subscription" ("id", "sub_date", "duration", "expiration", "plan_id", "user_id", "plan_price") SELECT "id", "sub_date", "duration", "expiration", "plan_id", "user_id", 0 FROM "main_subscription";
+DROP TABLE "main_subscription";
+ALTER TABLE "new__main_subscription" RENAME TO "main_subscription";
+CREATE INDEX "main_subscription_plan_id_7c4ae514" ON "main_subscription" ("plan_id");
+--
+-- Alter field phonenumber on buddy
+--
+CREATE TABLE "new__main_buddy" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "relationship" varchar(30) NOT NULL, "user_id" integer NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "phonenumber" varchar(30) NOT NULL);
+INSERT INTO "new__main_buddy" ("id", "firstname", "lastname", "relationship", "user_id", "phonenumber") SELECT "id", "firstname", "lastname", "relationship", "user_id", "phonenumber" FROM "main_buddy";
+DROP TABLE "main_buddy";
+ALTER TABLE "new__main_buddy" RENAME TO "main_buddy";
+CREATE INDEX "main_buddy_user_id_5fc2b7e3" ON "main_buddy" ("user_id");
+--
+-- Alter field latitude on civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_beeeping" bool NOT NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL, "latitude" real NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone", "latitude") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "lawyer_id", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone", "latitude" FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_lawyer_id_aac71fd3" ON "main_civilian" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Remove field lawyer from civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "latitude" real NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_beeeping" bool NOT NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone" FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Add field lawyer to civilian
+--
+CREATE TABLE "main_civilian_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "civilian_id" integer NOT NULL REFERENCES "main_civilian" ("id") DEFERRABLE INITIALLY DEFERRED, "lawyer_id" integer NOT NULL REFERENCES "main_lawyer" ("id") DEFERRABLE INITIALLY DEFERRED);
+--
+-- Alter field longitude on civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "latitude" real NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_beeeping" bool NOT NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL, "longitude" real NULL);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "latitude", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone", "longitude") SELECT "id", "firstname", "lastname", "twitter_handle", "latitude", "plan_id", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone", "longitude" FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE UNIQUE INDEX "main_civilian_lawyer_civilian_id_lawyer_id_ca55a616_uniq" ON "main_civilian_lawyer" ("civilian_id", "lawyer_id");
+CREATE INDEX "main_civilian_lawyer_civilian_id_29739562" ON "main_civilian_lawyer" ("civilian_id");
+CREATE INDEX "main_civilian_lawyer_lawyer_id_4a17f2c8" ON "main_civilian_lawyer" ("lawyer_id");
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Alter field plan on civilian
+--
+CREATE TABLE "new__main_civilian" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NULL, "latitude" real NULL, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_beeeping" bool NOT NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL, "plan_id" integer NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO "new__main_civilian" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone", "plan_id") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "user_id", "address", "email", "image", "is_beeeping", "is_verified", "phone", "plan_id" FROM "main_civilian";
+DROP TABLE "main_civilian";
+ALTER TABLE "new__main_civilian" RENAME TO "main_civilian";
+CREATE INDEX "main_civilian_plan_id_3db84f99" ON "main_civilian" ("plan_id");
+--
+-- Alter field latitude on lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NOT NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL, "token" varchar(200) NULL, "latitude" real NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "plan_id", "user_id", "address", "email", "image", "is_verified", "phone", "token", "latitude") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "plan_id", "user_id", "address", "email", "image", "is_verified", "phone", "token", "latitude" FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Alter field longitude on lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "latitude" real NULL, "plan_id" integer NOT NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL, "token" varchar(200) NULL, "longitude" real NULL);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "latitude", "plan_id", "user_id", "address", "email", "image", "is_verified", "phone", "token", "longitude") SELECT "id", "firstname", "lastname", "twitter_handle", "latitude", "plan_id", "user_id", "address", "email", "image", "is_verified", "phone", "token", "longitude" FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Alter field plan on lawyer
+--
+CREATE TABLE "new__main_lawyer" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(30) NOT NULL, "lastname" varchar(30) NOT NULL, "twitter_handle" varchar(150) NULL, "longitude" real NULL, "latitude" real NULL, "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "address" varchar(150) NULL, "email" varchar(150) NULL, "image" varchar(100) NULL, "is_verified" bool NOT NULL, "phone" varchar(150) NULL, "token" varchar(200) NULL, "plan_id" integer NULL REFERENCES "main_plan" ("id") DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO "new__main_lawyer" ("id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "user_id", "address", "email", "image", "is_verified", "phone", "token", "plan_id") SELECT "id", "firstname", "lastname", "twitter_handle", "longitude", "latitude", "user_id", "address", "email", "image", "is_verified", "phone", "token", "plan_id" FROM "main_lawyer";
+DROP TABLE "main_lawyer";
+ALTER TABLE "new__main_lawyer" RENAME TO "main_lawyer";
+CREATE INDEX "main_lawyer_plan_id_e1b28bdb" ON "main_lawyer" ("plan_id");
+--
+-- Alter field num_of_buddies on plan
+--
+CREATE TABLE "new__main_plan" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(30) NOT NULL, "num_of_lawyers" integer NOT NULL, "num_of_devices" integer NOT NULL, "price" integer NOT NULL, "type_of_user" varchar(30) NOT NULL, "num_of_buddies" integer NOT NULL);
+INSERT INTO "new__main_plan" ("id", "name", "num_of_lawyers", "num_of_devices", "price", "type_of_user", "num_of_buddies") SELECT "id", "name", "num_of_lawyers", "num_of_devices", "price", "type_of_user", "num_of_buddies" FROM "main_plan";
+DROP TABLE "main_plan";
+ALTER TABLE "new__main_plan" RENAME TO "main_plan";
+--
+-- Alter field num_of_devices on plan
+--
+CREATE TABLE "new__main_plan" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(30) NOT NULL, "num_of_buddies" integer NOT NULL, "num_of_lawyers" integer NOT NULL, "price" integer NOT NULL, "type_of_user" varchar(30) NOT NULL, "num_of_devices" integer NOT NULL);
+INSERT INTO "new__main_plan" ("id", "name", "num_of_buddies", "num_of_lawyers", "price", "type_of_user", "num_of_devices") SELECT "id", "name", "num_of_buddies", "num_of_lawyers", "price", "type_of_user", "num_of_devices" FROM "main_plan";
+DROP TABLE "main_plan";
+ALTER TABLE "new__main_plan" RENAME TO "main_plan";
+--
+-- Alter field num_of_lawyers on plan
+--
+CREATE TABLE "new__main_plan" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(30) NOT NULL, "num_of_buddies" integer NOT NULL, "num_of_devices" integer NOT NULL, "price" integer NOT NULL, "type_of_user" varchar(30) NOT NULL, "num_of_lawyers" integer NOT NULL);
+INSERT INTO "new__main_plan" ("id", "name", "num_of_buddies", "num_of_devices", "price", "type_of_user", "num_of_lawyers") SELECT "id", "name", "num_of_buddies", "num_of_devices", "price", "type_of_user", "num_of_lawyers" FROM "main_plan";
+DROP TABLE "main_plan";
+ALTER TABLE "new__main_plan" RENAME TO "main_plan";
+--
+-- Alter field price on plan
+--
+CREATE TABLE "new__main_plan" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(30) NOT NULL, "num_of_buddies" integer NOT NULL, "num_of_lawyers" integer NOT NULL, "num_of_devices" integer NOT NULL, "type_of_user" varchar(30) NOT NULL, "price" integer NOT NULL);
+INSERT INTO "new__main_plan" ("id", "name", "num_of_buddies", "num_of_lawyers", "num_of_devices", "type_of_user", "price") SELECT "id", "name", "num_of_buddies", "num_of_lawyers", "num_of_devices", "type_of_user", "price" FROM "main_plan";
+DROP TABLE "main_plan";
+ALTER TABLE "new__main_plan" RENAME TO "main_plan";
+--
+-- Create model Token
+--
+CREATE TABLE "main_token" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "device_id" varchar(200) NULL, "username" varchar(200) NULL, "device_name" varchar(200) NULL, "user_agent" varchar(200) NULL, "token" varchar(200) NULL, "is_active" bool NOT NULL, "icon" varchar(100) NULL, "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+--
+-- Create model Beeep
+--
+CREATE TABLE "main_beeep" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "start_lng" real NOT NULL, "start_lat" real NOT NULL, "end_lng" real NOT NULL, "end_lat" real NOT NULL, "plan_price" integer NOT NULL, "beeep_start_time" datetime NOT NULL, "beeep_end_time" datetime NOT NULL, "is_active" bool NOT NULL, "user_id" integer NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+CREATE INDEX "main_token_user_id_71abe894" ON "main_token" ("user_id");
+CREATE INDEX "main_beeep_user_id_7173215f" ON "main_beeep" ("user_id");
+COMMIT;
