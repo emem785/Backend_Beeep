@@ -81,6 +81,7 @@ class Lawyer(models.Model):
     image = models.ImageField(
         upload_to='profile_pics/', blank=False, null=True)
     firebase_key = models.CharField(max_length=400, blank=True, null=True)
+    on_call = models.BooleanField(default=False)
 
     def save_image(self, *args, **kwargs):
 
@@ -117,6 +118,10 @@ class Lawyer(models.Model):
         if firebase_key:
             self.firebase_key = firebase_key
 
+        on_call = data.get("on_call")
+        if on_call:
+            self.on_call = on_call
+
         address = data.get("address")
         if address:
             self.address = address
@@ -146,7 +151,7 @@ class Lawyer(models.Model):
     def get_closest(user):
 
         lawyers = Lawyer.objects.all().values("longitude", "latitude",
-                                              "firstname", "lastname", "phone")
+                                              "firstname", "lastname", "phone","on_call")
 
         lawyer_frame = pd.DataFrame(list(lawyers))
 
@@ -346,6 +351,7 @@ class Civilian(models.Model):
         firebase_key = data.get("firebase_key")
         if firebase_key:
             self.firebase_key = firebase_key
+
 
         plan_id = data.get("plan")
         if plan_id:
