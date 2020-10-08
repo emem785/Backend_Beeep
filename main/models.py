@@ -692,7 +692,8 @@ class Beeep(models.Model):
                     "to": buddy_firebase_key,
                     "notification": {
                         "title": "Beep Alert",
-                        "body": f"{buddies[0]["firstname"]} might be in danger he sent out a beeep"
+                        "body": "{} might be in danger he sent out a beeep".format(buddy[0]["firstname"])
+                    
                     },
                     "data": {
                         'click_action': 'FLUTTER_NOTIFICATION_CLICK',
