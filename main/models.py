@@ -681,6 +681,7 @@ class Beeep(models.Model):
             try:
                 buddies = civilian.get_buddies()
                 buddy_phone = buddies[0]["phonenumber"]
+                buddy_firstname = buddies[0]["firstname"]
                 buddy = Civilian.objects.get(phone=buddy_phone)
 
                 buddy_firebase_key = buddy.firebase_key
@@ -692,7 +693,7 @@ class Beeep(models.Model):
                     "to": buddy_firebase_key,
                     "notification": {
                         "title": "Beep Alert",
-                        "body": "{} might be in danger he sent out a beeep".format(buddy[0]["firstname"])
+                        "body": "{} might be in danger he sent out a beeep".format(buddy_firstname)
                     
                     },
                     "data": {
