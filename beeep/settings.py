@@ -75,7 +75,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'main',
     'useraccounts',
-    'cors'
+    'cors',
+    'channels',
+    'tracking'
 ]
 
 MIDDLEWARE = [
@@ -109,8 +111,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'beeep.wsgi.application'
+ASGI_APPLICATION = 'beeep.routing.application'
 
-
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('192.168.99.102', 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 

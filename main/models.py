@@ -706,6 +706,7 @@ class Beeep(models.Model):
                         'click_action': 'FLUTTER_NOTIFICATION_CLICK',
                         'id': '1',
                         'status': 'done',
+                        'name':buddy_firstname
                     }
                 }
                 response = requests.post(
